@@ -9,14 +9,18 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
-app.get("/api/customer", (req, res) => {
-    pool.query("SELECT customer_id, name, email, phone_no, image, distription FROM customer ", (error, rows) => {
-        if (error) {
-            return res.status(500).json({ error });
-        }
+app.get("/api/customer/:id", (req, res) => {
+    pool.query(
+        " SELECT customer_id, name, email, phone_no, image, distription FROM customer WHERE customer_id =2",
+        [req.params.id],
+        (error, rows) => {
+            if (error) {
+                return res.status(500).json({ error });
+            }
 
-        res.json(rows);
-    });
+            res.json(rows);
+        }
+    );
 });
 
 app.listen(9000, () => console.log("App listening on port 9000"));
