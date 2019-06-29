@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 app.get("/api/customer/:id", (req, res) => {
     pool.query(
-        " SELECT customer_id, name, email, phone_no, image, distription FROM customer WHERE customer_id =2",
+        " SELECT customer_id, name, email, phone_no, image, distription FROM customer WHERE customer_id =3",
         [req.params.id],
         (error, rows) => {
             if (error) {
