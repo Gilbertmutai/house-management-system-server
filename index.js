@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 });
 
 app.get("/api/customer", (req, res) => {
-    pool.query("SELECT customer_id, name, email, phone_no, image, distription FROM customer", (error, rows) => { 
+    pool.query("SELECT customer_id, name, email, phone_no, image, description FROM customer", (error, rows) => {
         if (error) {
             return res.status(500).json({ error });
         }
@@ -21,7 +21,7 @@ app.get("/api/customer", (req, res) => {
 
 app.get("/api/customer/:id", (req, res) => {
     pool.query(
-         " SELECT customer_id, name, email, phone_no, image, distription FROM customer WHERE customer_id = ?",      
+        " SELECT customer_id, name, email, phone_no, image, description FROM customer WHERE customer_id = ?",
         [req.params.id],
         (error, rows) => {
             if (error) {
