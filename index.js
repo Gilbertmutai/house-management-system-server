@@ -75,20 +75,40 @@ app.get("/api/house_location", (req, res) => {
 app.post("/api/customer", (req, res) => {
     const customer = req.body;
     console.log(customer);
-    
+
     // if ( !name ||!email || !phone_no || !image || !description) {
     //     return res.status(400).json({ error: "Invalid payload" });
     // }
 
     pool.query(
         "INSERT INTO customer (name, email, phone_no, image, description) VALUES ( ?, ?, ?, ?, ?)",
-        [ customer.name, customer.email,customer.phone_no, customer.image, customer.description],
+        [customer.name, customer.email, customer.phone_no, customer.image, customer.description],
         (error, results) => {
             if (error) {
                 return res.status(500).json({ error });
             }
 
             res.json(results.insertId);
+        }
+    );
+});
+
+app.put("/api/customer/:id", (req, res) => {
+    const customer = req.body;
+
+    if (!customer.name || customer.email || customer.phone_no || customer.image || customer.description ) {
+        return res.status(400).json({ error: "Invalid payload" });
+    }
+
+    pool.query(
+        "UPDATE INTO customer SET name =?, email =?, phone_id =?, image =?, description =? WHERE id =?",
+        [customer.name, customer.email, customer.phone_no, customer.image, customer.description, req.params.id],
+        (error, results) => {
+            if (error) {
+                return res.status(500).json({ error });
+            }
+
+            res.json(results.changedRows);
         }
     );
 });
