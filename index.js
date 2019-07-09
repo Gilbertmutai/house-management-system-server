@@ -9,6 +9,9 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
 });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.get("/api/customer", (req, res) => {
     pool.query("SELECT customer_id, name, email, phone_no, image, description FROM customer", (error, rows) => {
         if (error) {
@@ -29,6 +32,52 @@ app.get("/api/customer/:id", (req, res) => {
             }
 
             res.json(rows);
+        }
+    );
+});
+
+app.get("/api/house", (req, res) => {
+    pool.query("SELECT house_id, name, image, description, customer_id FROM house", (error, rows) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+
+        res.json(rows);
+    });
+});
+
+app.get("/api/house/:id", (req, res) => {
+    pool.query(
+        " SELECT house_id, name, image, description, customer_id FROM house WHERE house_id = ?",
+        [req.params.id],
+        (error, rows) => {
+            if (error) {
+                return res.status(500).json({ error });
+            }
+
+            res.json(rows);
+        }
+    );
+});
+
+
+app.post("/api/customer", (req, res) => {
+    const customer = req.body;
+    console.log(customer);
+    
+    // if ( !name ||!email || !phone_no || !image || !description) {
+    //     return res.status(400).json({ error: "Invalid payload" });
+    // }
+
+    pool.query(
+        "INSERT INTO customer (name, email, phone_no, image, description) VALUES ( ?, ?, ?, ?, ?)",
+        [ customer.name, customer.email,customer.phone_no, customer.image, customer.description],
+        (error, results) => {
+            if (error) {
+                return res.status(500).json({ error });
+            }
+
+            res.json(results.insertId);
         }
     );
 });
