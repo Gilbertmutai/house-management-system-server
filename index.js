@@ -60,6 +60,17 @@ app.get("/api/house/:id", (req, res) => {
     );
 });
 
+app.get("/api/house_location", (req, res) => {
+    pool.query("SELECT location, street, house_id FROM house_location", (error, rows) => {
+        if (error) {
+            return res.status(500).json({ error });
+        }
+
+        res.json(rows);
+    });
+});
+
+
 
 app.post("/api/customer", (req, res) => {
     const customer = req.body;
