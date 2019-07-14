@@ -113,4 +113,24 @@ app.put("/api/customer/:id", (req, res) => {
     );
 });
 
+
+app.put("/api/house/:house_id", (req, res) => {
+    const house = req.body;
+
+    if (!house.name || !house.image || !house.description || !house.customer_id) {
+        return res.status(400).json({ error: "Invalid payload" });
+    }
+                   pool.query(
+        "UPDATE house SET name = ?, image = ?, description = ?, customer_id = ? WHERE house_id = ?",
+        [house.name, house.image, house.description, house.customer_id, req.params.id],
+        (error, results) => {
+            if (error) {
+                return res.status(500).json({ error });
+            }
+
+            res.json(results.changedRows);
+        }
+   );
+});
+
 app.listen(9000, () => console.log("App listening on port 9000"));
