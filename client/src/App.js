@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import HouseList from "./HouseList.js";
+import "./App.css";
+
+// This is static hard-coded data, we shall later fetch it from our server
+const HOUSE_RENTING = [
+  {
+    "name":"Helper",
+    "image":"img_098385",
+    "description":"bedsitter",
+    "customer_id":"3"
+  }
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="mvls-app">
+      <header className="mvls-header">
       </header>
+      <main className="mvls-main">
+        <HouseList houseRenting={HOUSE_RENTING} />
+      </main>
     </div>
   );
 }
