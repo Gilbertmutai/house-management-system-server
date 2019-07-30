@@ -1,12 +1,12 @@
 import React from "react";
 import House from "./House";
 
-function HouseList({ houseRenting }) {
+function HouseList({ houseShowing }) {
     return (
-        <div className="mvls-container">
-            <div className="mvls-House-list">
-                {houseRenting.map(h => (
-                    <House key={h.id} popularHousing={h} />
+        <div className="hsls-container">
+            <div className="hsls-house-list">
+                {houseShowing.map(m => (
+                    <House key={m.id} houseShowing={m} />
                 ))}
             </div>
         </div>
